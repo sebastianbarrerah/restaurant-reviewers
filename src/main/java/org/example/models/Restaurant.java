@@ -1,6 +1,8 @@
 package org.example.models;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Restaurant {
     private String id;
@@ -8,8 +10,8 @@ public class Restaurant {
     private String city;
     private String schedule;
     private String description;
-    private List<Review> reviews;
-    private List<Menu> menus;
+    private List<Review> reviews = new ArrayList<>();
+    private Map<Restaurant, Menu> menus;
     private Double qualification;
 
     public Restaurant() {}
@@ -66,18 +68,18 @@ public class Restaurant {
     }
 
     public List<Review> getReviews() {
-        return reviews;
+        return this.reviews;
     }
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
 
-    public List<Menu> getMenus() {
-        return menus;
+    public Map<Restaurant, Menu> getMenus() {
+        return this.menus;
     }
 
-    public void setMenus(List<Menu> menus) {
+    public void setMenus(Map<Restaurant, Menu> menus) {
         this.menus = menus;
     }
 }
