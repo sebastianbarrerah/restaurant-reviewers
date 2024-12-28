@@ -28,14 +28,33 @@ public class RestaurantRepository {
         restaurants.add(restaurant);
     }
 
-    public void editRestaurant(Restaurant restaurant) {
-        restaurants.remove(restaurant);
-        restaurants.add(restaurant);
+    public void editRestaurant(String name, String newCity, String newDescription, String newName, String newSchedule) {
+        for (Restaurant restaurant : restaurants) {
+            if (restaurant.getName().equals(name)) {
+                restaurant.setCity(newCity);
+                restaurant.setDescription(newDescription);
+                restaurant.setName(newName);
+                restaurant.setSchedule(newSchedule);
+            }
+        }
+        System.out.println("No se encontró un restaurante con ese nombre.");
     }
 
-    public void deleteRestaurant(Restaurant restaurant) {
-        restaurants.remove(restaurant);
+    public Restaurant findByName(String name) {
+        return restaurants.stream()
+                .filter(restaurant -> restaurant.getName().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
     }
+
+    public Restaurant deleteRestaurant(String name) {
+        Restaurant restaurant = findByName(name);
+        if (restaurant != null) {
+            restaurants.remove(restaurant);
+        }
+        return restaurant;
+    }
+
 
     public List<Restaurant> showRestaurants() {
         return restaurants;
@@ -48,5 +67,4 @@ public class RestaurantRepository {
     public Map<Restaurant, Menu> getMenusToRestaurant() {
         return Map.of();
     }
-
 }

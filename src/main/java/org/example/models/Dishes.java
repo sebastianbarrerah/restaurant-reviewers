@@ -6,20 +6,14 @@ public class Dishes {
     private String name;
     private String description;
     private Double price;
-    private List<Review> reviews;
-    private List<Menu> menus;
     private Double qualification;
-    private List<String> ingredients;
-
+    private String ingredients;
 
     public Dishes() {}
 
-    public Dishes(String name, String description, Double price, List<Review> reviews, List<Menu> menus, Double qualification, List<String> ingredients) {
+    public Dishes(String name, String description, Double price, String ingredients) {
         this.name = name;
-        this.description = description;
         this.price = price;
-        this.reviews = reviews;
-        this.menus = menus;
         this.qualification = qualification;
         this.ingredients = ingredients;
     }
@@ -48,22 +42,6 @@ public class Dishes {
         this.price = price;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public List<Menu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<Menu> menus) {
-        this.menus = menus;
-    }
-
     public Double getQualification() {
         return qualification;
     }
@@ -72,11 +50,19 @@ public class Dishes {
         this.qualification = qualification;
     }
 
-    public List<String> getIngredients() {
+    public String getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String toString() {
+        return "Dishes: " + this.name + "\n" +
+                "Descripción: " + this.description + "\n" +
+                "Precio: " + this.price + "\n" +
+                "Ingredientes: " + this.ingredients + "\n" +
+                "Qualificación: " + this.qualification + "\n";
     }
 }
