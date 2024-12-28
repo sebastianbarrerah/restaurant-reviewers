@@ -1,39 +1,34 @@
 package org.example.models;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class Restaurant {
-    private String id;
     private String name;
     private String city;
     private String schedule;
     private String description;
     private List<Review> reviews = new ArrayList<>();
-    private Map<Restaurant, Menu> menus;
+    private LinkedList<Menu> menus = new LinkedList<>();
     private Double qualification;
 
     public Restaurant() {}
 
-    public Restaurant(String id, String name, String city, String description) {
-        this.id = id;
+    public Restaurant( String name, String city, String description) {
         this.name = name;
         this.city = city;
         this.description = description;
     }
 
-    public void qualificationPromedy() {
-        this.qualification = 0.0;
+    private void upadateQualification() {
+        this.qualification = reviews.stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0);
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -75,11 +70,23 @@ public class Restaurant {
         this.reviews = reviews;
     }
 
-    public Map<Restaurant, Menu> getMenus() {
+    public LinkedList<Menu> getMenus() {
         return this.menus;
     }
-
-    public void setMenus(Map<Restaurant, Menu> menus) {
+    public void setMenus(LinkedList<Menu> menus) {
         this.menus = menus;
     }
+
+    public String toString() {
+        return "Restaurant: " + this.name + "\n" +
+                "Reviews: " + this.reviews.size() + "\n" +
+                "Menus: " + this.menus.size() + "\n" +
+                "Rating: " + this.qualification + "\n" +
+                "Name: " + this.name + "\n" +
+                "City: " + this.city + "\n" +
+                "Schedule: " + this.schedule + "\n" +
+                "Description: " + this.description + "\n" +
+                "Qualification: " + this.qualification + "\n";
+    }
+
 }
