@@ -3,15 +3,24 @@ package org.example;
 import org.example.controllers.dishes.AddDishesController;
 import org.example.controllers.dishes.DeleteDishesController;
 import org.example.controllers.dishes.ShowDishesController;
+import org.example.controllers.menu.AddMenuController;
+import org.example.controllers.menu.DeleteMenuController;
+import org.example.controllers.menu.EditMenuController;
+import org.example.controllers.menu.ShowMenuController;
 import org.example.controllers.restaurant.AddRestaurantController;
 import org.example.controllers.restaurant.DeleteRestaurantController;
 import org.example.controllers.restaurant.EditRestaurantController;
 import org.example.controllers.restaurant.ShowRestaurantsController;
 import org.example.repositories.DishesRepository;
+import org.example.repositories.MenuRepository;
 import org.example.repositories.RestaurantRepository;
 import org.example.services.dishes.AddDishesService;
 import org.example.services.dishes.DeleteDishesService;
 import org.example.services.dishes.ShowDishesService;
+import org.example.services.menu.AddMenuService;
+import org.example.services.menu.DeleteMenuService;
+import org.example.services.menu.EditMenuService;
+import org.example.services.menu.ShowMenuService;
 import org.example.services.restaurant.AddRestaurantService;
 import org.example.services.restaurant.DeleteRestaurant;
 import org.example.services.restaurant.EditRestaurantService;
@@ -40,7 +49,7 @@ public class Main {
         //Platos
 
         DishesRepository dishesRepository = DishesRepository.getInstance();
-        AddDishesService addDishesService = new AddDishesService(dishesRepository, consoleHandler, consoleHandler);
+        AddDishesService addDishesService = new AddDishesService(dishesRepository, consoleHandler);
         AddDishesController addDishesController = new AddDishesController(addDishesService);
 
         DeleteDishesService deleteDishesService = new DeleteDishesService(dishesRepository, consoleHandler);
@@ -48,6 +57,21 @@ public class Main {
 
         ShowDishesService showDishesService = new ShowDishesService(dishesRepository);
         ShowDishesController showDishesController = new ShowDishesController(showDishesService);
+
+        // Menús
+        MenuRepository menuRepository = MenuRepository.getInstance();
+        AddMenuService addMenuService = new AddMenuService(menuRepository, consoleHandler, dishesRepository);
+        AddMenuController addMenuController = new AddMenuController(addMenuService);
+
+        ShowMenuService showMenuService = new ShowMenuService(menuRepository);
+        ShowMenuController showMenuController = new ShowMenuController(showMenuService);
+
+        EditMenuService editMenuService = new EditMenuService(menuRepository, consoleHandler);
+        EditMenuController editMenuController = new EditMenuController(editMenuService);
+
+        DeleteMenuService deleteMenuService = new DeleteMenuService(menuRepository, consoleHandler);
+        DeleteMenuController deleteMenuController = new DeleteMenuController(deleteMenuService);
+
 
 
         // Map para asociar opciones con controladores
@@ -58,7 +82,9 @@ public class Main {
                 4, deleteRestaurantController::execute,
                 5, addDishesController::execute,
                 6, deleteDishesController::execute,
-                7, showDishesController::execute
+                7, showDishesController::execute,
+                8, addMenuController::execute,
+                11, showMenuController::execute
         );
 
         // Menú principal
@@ -74,15 +100,17 @@ public class Main {
                     5. agregar platos
                     6. eliminar platos
                     7. ver platos
-                    8. Salir
+                    8. Añadir menú
+                    9. Salir
+                    11. Ver menús
                     """);
 
             if (controllers.containsKey(option)) {
                 controllers.get(option).run();
-            } else if (option != 8) {
+            } else if (option != 9) {
                 System.out.println("Opción no válida. Inténtalo de nuevo.");
             }
-        } while (option != 8);
+        } while (option != 9);
 
         System.out.println("Gracias por usar la aplicación. ¡Adiós!");
     }
