@@ -1,5 +1,5 @@
 package org.example.controllers.interfaces;
 
-public interface Observer {
+public interface IObserver {
     void update(String subjectName, double newQualification);
 }

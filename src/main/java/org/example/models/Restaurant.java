@@ -1,11 +1,10 @@
 package org.example.models;
 
-import org.example.controllers.interfaces.Observer;
+import org.example.controllers.interfaces.IObserver;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class Restaurant {
     private String name;
@@ -15,7 +14,7 @@ public class Restaurant {
     private List<ReviewRestaurant> reviews = new ArrayList<>();
     private LinkedList<Menu> menus = new LinkedList<>();
     private Double qualification;
-    private List<Observer> observers = new ArrayList<>();
+    private List<IObserver> observers = new ArrayList<>();
 
     public Restaurant() {}
 
@@ -85,7 +84,7 @@ public class Restaurant {
 
 
     private void notifyObservers() {
-        for (Observer observer : observers) {
+        for (IObserver observer : observers) {
             observer.update(this.name, this.qualification);
         }
     }

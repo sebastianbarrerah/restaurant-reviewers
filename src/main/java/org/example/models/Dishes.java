@@ -1,6 +1,6 @@
 package org.example.models;
 
-import org.example.controllers.interfaces.Observer;
+import org.example.controllers.interfaces.IObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public class Dishes {
     private Double qualification;
     private String ingredients;
     private List<Review> reviews = new ArrayList<>();
-    private List<Observer> observers = new ArrayList<>();
+    private List<IObserver> observers = new ArrayList<>();
 
     public Dishes() {}
 
@@ -66,7 +66,7 @@ public class Dishes {
 
 
     private void notifyObservers() {
-        for (Observer observer : observers) {
+        for (IObserver observer : observers) {
             observer.update(this.name, this.qualification);
         }
     }

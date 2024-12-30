@@ -1,7 +1,6 @@
 package org.example.repositories;
 
 import org.example.models.Dishes;
-import org.example.models.Restaurant;
 
 import java.util.ArrayList;
 import java.util.List;
