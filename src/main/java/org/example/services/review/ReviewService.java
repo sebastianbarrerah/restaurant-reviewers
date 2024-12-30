@@ -5,13 +5,11 @@ import org.example.models.*;
 import org.example.repositories.ReviewRepository;
 import org.example.repositories.RestaurantRepository;
 import org.example.repositories.DishesRepository;
-import org.example.repositories.UsersRepository;
 import org.example.utils.ConsoleHandler;
 
 public class ReviewService {
     private final RestaurantRepository restaurantRepository;
     private final DishesRepository dishesRepository;
-    private final UsersRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final ConsoleHandler consoleHandler;
     private final ReviewFactory reviewFactory;
@@ -19,36 +17,26 @@ public class ReviewService {
     public ReviewService(
             RestaurantRepository restaurantRepository,
             DishesRepository dishesRepository,
-            UsersRepository userRepository,
             ReviewRepository reviewRepository,
             ConsoleHandler consoleHandler,
             ReviewFactory reviewFactory
     ) {
         this.restaurantRepository = restaurantRepository;
         this.dishesRepository = dishesRepository;
-        this.userRepository = userRepository;
         this.reviewRepository = reviewRepository;
         this.consoleHandler = consoleHandler;
         this.reviewFactory = reviewFactory;
     }
 
     public void createReview() {
-        // Pedir tipo de review
-        String type = consoleHandler.getString("¿Qué deseas calificar? (restaurant/dish): ").toLowerCase();
+        String type = consoleHandler.getString("¿Qué deseas calificar? (restaurant/dish): ").toUpperCase();
 
-        // Pedir datos comunes
         String userName = consoleHandler.getString("Ingresa tu nombre de usuario: ");
-        Users user = userRepository.findByName(userName);
-
-        if (user == null) {
-            System.out.println("Usuario no encontrado.");
-            return;
-        }
 
         String comment = consoleHandler.getString("Ingresa tu comentario: ");
         Double rating = consoleHandler.getDouble("Ingresa tu calificación (0-5): ");
 
-        Review review = createReviewByType(type, user, comment, rating);
+        Review review = createReviewByType(type, userName, comment, rating);
 
         if (review != null) {
             reviewRepository.addReview(review);
@@ -59,16 +47,16 @@ public class ReviewService {
         }
     }
 
-    private Review createReviewByType(String type, Users user, String comment, Double rating) {
-        if ("restaurant".equals(type)) {
+    private Review createReviewByType(String type, String user, String comment, Double rating) {
+        if ("RESTAURANT".equals(type)) {
             return createRestaurantReview(user, comment, rating);
-        } else if ("dish".equals(type)) {
+        } else if ("DISH".equals(type)) {
             return createDishReview(user, comment, rating);
         }
         return null;
     }
 
-    private Review createRestaurantReview(Users user, String comment, Double rating) {
+    private Review createRestaurantReview(String user, String comment, Double rating) {
         String restaurantName = consoleHandler.getString("Ingresa el nombre del restaurante: ");
         Restaurant restaurant = restaurantRepository.findByName(restaurantName);
 
@@ -80,7 +68,6 @@ public class ReviewService {
         Integer service = consoleHandler.getInteger("Calificación de servicio (0-5): ");
         Integer value = consoleHandler.getInteger("Calificación de valor (0-5): ");
         Integer location = consoleHandler.getInteger("Calificación de ubicación (0-5): ");
-
 
         Review review = reviewFactory.createReview(
                 ReviewType.RESTAURANT,
@@ -96,13 +83,12 @@ public class ReviewService {
                 restaurant
         );
 
-
         restaurant.addReview((ReviewRestaurant) review);
 
         return review;
     }
 
-    private Review createDishReview(Users user, String comment, Double rating) {
+    private Review createDishReview(String user, String comment, Double rating) {
         String dishName = consoleHandler.getString("Ingresa el nombre del plato: ");
         Dishes dish = dishesRepository.findByName(dishName);
 
@@ -115,7 +101,6 @@ public class ReviewService {
         Integer presentation = consoleHandler.getInteger("Calificación de presentación (0-5): ");
         Integer service = consoleHandler.getInteger("Calificación de servicio (0-5): ");
         Integer value = consoleHandler.getInteger("Calificación de valor (0-5): ");
-
 
         Review review = reviewFactory.createReview(
                 ReviewType.DISH,
@@ -130,7 +115,6 @@ public class ReviewService {
                 null,
                 null
         );
-
 
         dish.addReview((ReviewDishes) review);
 

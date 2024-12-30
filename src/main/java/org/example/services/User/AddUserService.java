@@ -15,8 +15,7 @@ public class AddUserService {
 
     public void execute() {
         String name = consoleHandler.getString("Ingrese su nombre: ");
-        String email = consoleHandler.getString("Ingrese su email: ");
-        Users user = new Users(name, email);
+        Users user = new Users(name);
         usersRepository.addUser(user);
     }
 }

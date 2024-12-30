@@ -1,35 +1,59 @@
 package org.example.models;
 
 public class ReviewDishes extends Review {
+    private final Integer flavor;
+    private final Integer presentation;
+    private final Integer service;
+    private final Integer value;
+    private final Dishes dish;
 
-    private Dishes dishes;
-    private Integer flavor;
-    private Integer presentation;
-    private Integer service;
-    private Integer value;
-
-    public ReviewDishes() {}
-
-    public ReviewDishes(Users user, String comment, Double rating, Dishes dishes, Integer flavor, Integer presentation, Integer service, Integer value) {
-        super(user, comment, rating);
-        this.dishes = dishes;
+    public ReviewDishes(
+            String userName,
+            String comment,
+            Double rating,
+            Integer flavor,
+            Integer presentation,
+            Integer service,
+            Integer value,
+            Dishes dish
+    ) {
+        super(userName, comment, rating);
         this.flavor = flavor;
         this.presentation = presentation;
         this.service = service;
         this.value = value;
+        this.dish = dish;
     }
 
+
+
+    public Integer getFlavor() {
+        return flavor;
+    }
+
+    public Integer getPresentation() {
+        return presentation;
+    }
+
+    public Integer getService() {
+        return service;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public Dishes getDish() {
+        return dish;
+    }
+
+    @Override
     public String showReview() {
-        return "Dishes: " + this.dishes.getName() + "\n" +
-                "Flavor: " + this.flavor + "\n" +
-                "Presentation: " + this.presentation + "\n" +
-                "Service: " + this.service + "\n" +
-                "Value: " + this.value + "\n" +
-                "Comment: " + this.getComment() + "\n" +
-                "Rating: " + this.getRating() + "\n";
+        return String.format("Reseña para Plato: %s\nUsuario: %s\nComentario: %s\nCalificación: %.1f\nSabor: %d\nPresentación: %d\nServicio: %d\nValor: %d",
+                dish.getName(), getUserName(), getComment(), getRating(), flavor, presentation, service, value);
     }
 
     public Dishes getDishes() {
-        return dishes;
+        return dish;
     }
 }

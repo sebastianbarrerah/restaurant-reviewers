@@ -1,32 +1,46 @@
 package org.example.models;
 
 public class ReviewRestaurant extends Review {
+    private final Integer service;
+    private final Integer value;
+    private final Integer location;
+    private final Restaurant restaurant;
 
-    private Restaurant restaurant;
-    private Integer service;
-    private Integer value;
-    private Integer location;
-
-    public ReviewRestaurant() {}
-
-    public ReviewRestaurant(Users user, String comment, Double rating, Restaurant restaurant, Integer service, Integer value, Integer location) {
-        super(user, comment, rating);
-        this.restaurant = restaurant;
+    public ReviewRestaurant(
+            String userName,
+            String comment,
+            Double rating,
+            Integer service,
+            Integer value,
+            Integer location,
+            Restaurant restaurant
+    ) {
+        super(userName, comment, rating);
         this.service = service;
         this.value = value;
         this.location = location;
+        this.restaurant = restaurant;
     }
 
-    public String showReview() {
-        return "Restaurant: " + this.restaurant.getName() + "\n" +
-                "Service: " + this.service + "\n" +
-                "Value: " + this.value + "\n" +
-                "Location: " + this.location + "\n" +
-                "Comment: " + this.getComment() + "\n" +
-                "Rating: " + this.getRating() + "\n";
+    public Integer getService() {
+        return service;
+    }
+
+    public Integer getValue() {
+        return value;
+    }
+
+    public Integer getLocation() {
+        return location;
     }
 
     public Restaurant getRestaurant() {
         return restaurant;
+    }
+
+    @Override
+    public String showReview() {
+        return String.format("Reseña para Restaurante: %s\nUsuario: %s\nComentario: %s\nCalificación: %.1f\nServicio: %d\nValor: %d\nUbicación: %d",
+                restaurant.getName(), getUserName(), getComment(), getRating(), service, value, location);
     }
 }

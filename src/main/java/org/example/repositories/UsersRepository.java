@@ -29,7 +29,7 @@ public class UsersRepository {
         this.user = user;
     }
 
-    public Users findByName(String userName) {
-        return user.getName().equalsIgnoreCase(userName) ? user : null;
+    public Users findByName(String name) {
+        return user.getName().equalsIgnoreCase(name) ? user : null;
     }
 }

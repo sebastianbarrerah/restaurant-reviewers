@@ -24,7 +24,6 @@ public class AddMenuService {
     public void addMenuExecute() {
         String name = consoleHandler.getString("Ingresa el nombre del menú: ");
 
-        // Mostrar todos los platos disponibles
         List<Dishes> allDishes = dishesRepository.showDishes();
         if (allDishes.isEmpty()) {
             System.out.println("No hay platos disponibles para añadir.");
@@ -36,7 +35,6 @@ public class AddMenuService {
             System.out.println((i + 1) + ". " + allDishes.get(i).getName());
         }
 
-        // Solicitar al usuario que elija platos
         List<Dishes> selectedDishes = new ArrayList<>();
         String input;
         do {
@@ -56,7 +54,6 @@ public class AddMenuService {
             }
         } while (!input.equalsIgnoreCase("fin"));
 
-        // Crear el menú con los platos seleccionados
         Menu menu = new Menu(name, selectedDishes);
         repository.addMenu(menu);
 

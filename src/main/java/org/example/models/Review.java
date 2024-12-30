@@ -1,44 +1,28 @@
 package org.example.models;
 
 public abstract class Review {
-    private Users user;
-    private String comment;
-    private Double rating;
+    private final String userName;
+    private final String comment;
+    private final Double rating;
 
-    public Review() {}
-
-    public Review(Users user, String comment, Double rating) {
-        this.user = user;
+    public Review(String userName, String comment, Double rating) {
+        this.userName = userName;
         this.comment = comment;
         this.rating = rating;
     }
 
-    public abstract String showReview();
 
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
+    public String getUserName() {
+        return userName;
     }
 
     public String getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public Double getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
-
-
-
+    public abstract String showReview();
 }

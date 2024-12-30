@@ -1,5 +1,7 @@
 package org.example.models;
 
+import org.example.controllers.interfaces.Observer;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,9 +12,10 @@ public class Restaurant {
     private String city;
     private String schedule;
     private String description;
-    private List<Review> reviews = new ArrayList<>();
+    private List<ReviewRestaurant> reviews = new ArrayList<>();
     private LinkedList<Menu> menus = new LinkedList<>();
     private Double qualification;
+    private List<Observer> observers = new ArrayList<>();
 
     public Restaurant() {}
 
@@ -22,12 +25,6 @@ public class Restaurant {
         this.description = description;
     }
 
-    public void updateQualification() {
-        this.qualification = reviews.stream()
-                .mapToDouble(Review::getRating)
-                .average()
-                .orElse(0.0);
-    }
 
 
     public String getName() {
@@ -62,16 +59,16 @@ public class Restaurant {
         this.description = description;
     }
 
-    public void addReview(Review review) {
+    public void addReview(ReviewRestaurant review) {
         this.reviews.add(review);
         updateQualification();
     }
 
-    public List<Review> getReviews() {
+    public List<ReviewRestaurant> getReviews() {
         return this.reviews;
     }
 
-    public void setReviews(List<Review> reviews) {
+    public void setReviews(List<ReviewRestaurant> reviews) {
         this.reviews = reviews;
     }
 
@@ -86,6 +83,25 @@ public class Restaurant {
         this.menus.add(menu);
     }
 
+
+    private void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this.name, this.qualification);
+        }
+    }
+
+    public void updateQualification() {
+        double oldQualification = this.qualification;
+        this.qualification = reviews.stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0);
+
+        if (this.qualification != oldQualification) {
+            notifyObservers();
+        }
+    }
+
     public String toString() {
         return "Restaurant: " + this.name + "\n" +
                 "Reviews: " + this.reviews.size() + "\n" +
@@ -97,5 +113,4 @@ public class Restaurant {
                 "Description: " + this.description + "\n" +
                 "Qualification: " + this.qualification + "\n";
     }
-
 }

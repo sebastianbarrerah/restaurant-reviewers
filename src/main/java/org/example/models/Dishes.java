@@ -1,5 +1,7 @@
 package org.example.models;
 
+import org.example.controllers.interfaces.Observer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ public class Dishes {
     private Double qualification;
     private String ingredients;
     private List<Review> reviews = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
 
     public Dishes() {}
 
@@ -20,12 +23,6 @@ public class Dishes {
         this.ingredients = ingredients;
     }
 
-    public void updateQualification() {
-        this.qualification = reviews.stream()
-                .mapToDouble(Review::getRating)
-                .average()
-                .orElse(0.0);
-    }
 
     public String getName() {
         return name;
@@ -65,6 +62,25 @@ public class Dishes {
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
+    }
+
+
+    private void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this.name, this.qualification);
+        }
+    }
+
+    public void updateQualification() {
+        double oldQualification = this.qualification;
+        this.qualification = reviews.stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0);
+
+        if (this.qualification != oldQualification) {
+            notifyObservers();
+        }
     }
 
     public void addReview(Review review) {
