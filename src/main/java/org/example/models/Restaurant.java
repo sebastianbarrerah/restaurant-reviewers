@@ -22,7 +22,7 @@ public class Restaurant {
         this.description = description;
     }
 
-    private void upadateQualification() {
+    public void updateQualification() {
         this.qualification = reviews.stream()
                 .mapToDouble(Review::getRating)
                 .average()
@@ -64,6 +64,7 @@ public class Restaurant {
 
     public void addReview(Review review) {
         this.reviews.add(review);
+        updateQualification();
     }
 
     public List<Review> getReviews() {

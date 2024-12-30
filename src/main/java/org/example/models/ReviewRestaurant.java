@@ -3,24 +3,24 @@ package org.example.models;
 public class ReviewRestaurant extends Review {
 
     private Restaurant restaurant;
-    private Integer Service;
-    private Integer Value;
+    private Integer service;
+    private Integer value;
     private Integer location;
 
     public ReviewRestaurant() {}
 
-    public ReviewRestaurant(Users user, String comment, Double rating, Restaurant restaurant, Integer Service, Integer Value, Integer location) {
+    public ReviewRestaurant(Users user, String comment, Double rating, Restaurant restaurant, Integer service, Integer value, Integer location) {
         super(user, comment, rating);
         this.restaurant = restaurant;
-        this.Service = Service;
-        this.Value = Value;
+        this.service = service;
+        this.value = value;
         this.location = location;
     }
 
     public String showReview() {
         return "Restaurant: " + this.restaurant.getName() + "\n" +
-                "Service: " + this.Service + "\n" +
-                "Value: " + this.Value + "\n" +
+                "Service: " + this.service + "\n" +
+                "Value: " + this.value + "\n" +
                 "Location: " + this.location + "\n" +
                 "Comment: " + this.getComment() + "\n" +
                 "Rating: " + this.getRating() + "\n";

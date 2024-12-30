@@ -20,6 +20,13 @@ public class Dishes {
         this.ingredients = ingredients;
     }
 
+    public void updateQualification() {
+        this.qualification = reviews.stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0);
+    }
+
     public String getName() {
         return name;
     }
@@ -62,6 +69,7 @@ public class Dishes {
 
     public void addReview(Review review) {
         this.reviews.add(review);
+        updateQualification();
     }
 
     public String toString() {
