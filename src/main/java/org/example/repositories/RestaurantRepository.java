@@ -64,7 +64,22 @@ public class RestaurantRepository {
         return List.of();
     }
 
-    public Map<Restaurant, Menu> getMenusToRestaurant() {
-        return Map.of();
+    public void addMenuToRestaurant(String restaurantName, Menu menu) {
+        Restaurant restaurant = findByName(restaurantName);
+        if (restaurant != null) {
+            restaurant.addMenu(menu);
+            System.out.println("Menú añadido al restaurante: " + restaurant.getName());
+        } else {
+            System.out.println("No se encontró un restaurante con ese nombre.");
+        }
+    }
+
+    public List<Menu> getMenusByRestaurant(String restaurantName) {
+        Restaurant restaurant = findByName(restaurantName);
+        if (restaurant != null) {
+            return restaurant.getMenus();
+        }
+        System.out.println("No se encontró un restaurante con ese nombre.");
+        return new ArrayList<>();
     }
 }

@@ -25,4 +25,8 @@ public class ReviewRestaurant extends Review {
                 "Comment: " + this.getComment() + "\n" +
                 "Rating: " + this.getRating() + "\n";
     }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
 }

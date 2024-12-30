@@ -1,11 +1,9 @@
-package org.example.models;
+import org.example.models.Users;
 
 public abstract class Review {
     private Users user;
     private String comment;
     private Double rating;
-
-    public Review() {}
 
     public Review(Users user, String comment, Double rating) {
         this.user = user;
@@ -13,32 +11,7 @@ public abstract class Review {
         this.rating = rating;
     }
 
-    public abstract String showReview();
-
-    public Users getUser() {
-        return user;
+    public String showReview() {
+        return String.format("Comentario: %s, Calificación: %.2f", comment, rating);
     }
-
-    public void setUser(Users user) {
-        this.user = user;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
-    }
-
-
-
 }

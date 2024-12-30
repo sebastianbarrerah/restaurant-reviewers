@@ -62,6 +62,10 @@ public class Restaurant {
         this.description = description;
     }
 
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
     public List<Review> getReviews() {
         return this.reviews;
     }
@@ -75,6 +79,10 @@ public class Restaurant {
     }
     public void setMenus(LinkedList<Menu> menus) {
         this.menus = menus;
+    }
+
+    public void addMenu(Menu menu) {
+        this.menus.add(menu);
     }
 
     public String toString() {

@@ -28,4 +28,8 @@ public class ReviewDishes extends Review {
                 "Comment: " + this.getComment() + "\n" +
                 "Rating: " + this.getRating() + "\n";
     }
+
+    public Dishes getDishes() {
+        return dishes;
+    }
 }
